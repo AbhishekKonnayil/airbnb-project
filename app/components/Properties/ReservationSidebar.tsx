@@ -17,6 +17,19 @@ const ReservationSidebar = () => {
       <button className="w-full mb-6 py-6 text-center text-white bg-airbnb rounded-xl hover:bg-airbnb-dark">
         Book
       </button>
+      <div className="mb-4 flex justify-between align-middle">
+        <p>$200 x 4 nights</p>
+        <p>$800</p>
+      </div>
+      <div className="mb-4 flex justify-between align-middle">
+        <p>airbnb fee</p>
+        <p>$40</p>
+      </div>
+      <hr />
+      <div className="mt-4 mb-4 flex justify-between align-middle">
+        <p>Total</p>
+        <p>$840</p>
+      </div>
     </aside>
   );
 };
