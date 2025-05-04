@@ -8,9 +8,9 @@ export const metadata: Metadata = {
 };
 
 import React, { ReactNode } from "react";
-import Navbar from "./components/navbar";
+import Navbar from "./components/navbar/navbar";
 
-const RootLayout = ({ children }: { children:ReactNode }) => {
+const RootLayout = ({ children }: { children: ReactNode }) => {
   return (
     <html>
       <body>
