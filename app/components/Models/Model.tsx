@@ -1,22 +1,23 @@
 "use client";
-import React, { useCallback, useEffect, useState } from "react";
+
+import { useCallback, useEffect, useState } from "react";
 
 interface ModelProps {
   label: string;
+  close: () => void;
   content: React.ReactElement;
   isOpen: boolean;
-  close: () => void;
 }
 
 const Model: React.FC<ModelProps> = ({ label, content, isOpen, close }) => {
-  const [showModel, setshowModel] = useState(isOpen);
+  const [showModel, setShowModel] = useState(isOpen);
 
   useEffect(() => {
-    setshowModel(isOpen);
+    setShowModel(isOpen);
   }, [isOpen]);
 
   const handleClose = useCallback(() => {
-    setshowModel(false);
+    setShowModel(false);
 
     setTimeout(() => {
       close();
@@ -26,28 +27,29 @@ const Model: React.FC<ModelProps> = ({ label, content, isOpen, close }) => {
   if (!isOpen) {
     return null;
   }
+
   return (
-    <div className="flex items-center justify-center inset-0 fixed z-50 bg-black/60">
-      <div className="relative w-[90%] md:w-[80%] lg:w-[700px] my-6 h-auto mx-auto">
+    <div className="flex items-center justify-center fixed inset-0 z-50 bg-black/60">
+      <div className="relative w-[90%] md:w-[80%] lg:w-[700px] my-6 mx-auto h-auto">
         <div
           className={`translate duration-600 h-full ${
             showModel
               ? "translate-y-0 opacity-100"
-              : "translate-y-full opacity-10"
-          } `}
+              : "translate-y-full opacity-0"
+          }`}
         >
           <div className="w-full h-auto rounded-xl relative flex flex-col bg-white">
-            <header className="flex items-center p-6 rounded-t justify-center relative border-b ">
+            <header className="h-[60px] flex items-center p-6 rounded-t justify-center relative border-b">
               <div
                 onClick={handleClose}
-                className="p-3 py-2 absolute left-3 hover:bg-gray-300 rounded-full cursor-pointer "
+                className="p-3 absolute left-3 hover:bg-gray-300 rounded-full cursor-pointer"
               >
                 <svg
                   fill="none"
                   viewBox="0 0 24 24"
                   strokeWidth={1.5}
                   stroke="currentColor"
-                  className="size-6"
+                  className="w-6 h-6"
                 >
                   <path
                     strokeLinecap="round"
@@ -56,8 +58,10 @@ const Model: React.FC<ModelProps> = ({ label, content, isOpen, close }) => {
                   />
                 </svg>
               </div>
+
               <h2 className="text-lg font-bold">{label}</h2>
             </header>
+
             <section className="p-6">{content}</section>
           </div>
         </div>
