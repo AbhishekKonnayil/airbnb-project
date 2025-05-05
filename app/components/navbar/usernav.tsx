@@ -2,12 +2,17 @@
 
 import { useState } from "react";
 import MenuLink from "./MenuLink";
+import UseLoginModel from "@/app/hooks/useLoginModel";
 
 const UserNav = () => {
+  const loginModel = UseLoginModel();
   const [isOpen, setisOpen] = useState(false);
   return (
     <div className="border rounded-full inline-block p-2 relative ">
-      <button onClick={() => setisOpen(!isOpen)} className="flex items-center hover:scale-75 cursor-pointer">
+      <button
+        onClick={() => setisOpen(!isOpen)}
+        className="flex items-center hover:scale-75 cursor-pointer"
+      >
         <svg
           fill="none"
           viewBox="0 0 24 24"
@@ -39,7 +44,11 @@ const UserNav = () => {
         <div className="absolute w-[220px] shadow-md top-[60px] right-0 bg-white rounded-xl flex flex-col">
           <MenuLink
             label="Log in"
-            onClick={() => console.log("login successfully")}
+            onClick={() => {
+              console.log("login successfully");
+              setisOpen(false)
+              loginModel.open();
+            }}
           />
           <MenuLink
             label="Sign up"

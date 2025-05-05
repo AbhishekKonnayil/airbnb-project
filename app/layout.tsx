@@ -9,13 +9,18 @@ export const metadata: Metadata = {
 
 import React, { ReactNode } from "react";
 import Navbar from "./components/navbar/navbar";
+import Model from "./components/Models/Model";
+import LoginModel from "./components/Models/LoginModel";
 
 const RootLayout = ({ children }: { children: ReactNode }) => {
+  const content = <p>hi hello</p>;
+
   return (
     <html>
       <body>
         <Navbar />
         <div className="py-32"> {children}</div>
+        <LoginModel />
       </body>
     </html>
   );
