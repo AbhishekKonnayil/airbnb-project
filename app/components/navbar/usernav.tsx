@@ -1,9 +1,13 @@
-import React from "react";
+"use client";
+
+import { useState } from "react";
+import MenuLink from "./MenuLink";
 
 const UserNav = () => {
+  const [isOpen, setisOpen] = useState(false);
   return (
     <div className="border rounded-full inline-block p-2 relative ">
-      <button className="flex items-center">
+      <button onClick={() => setisOpen(!isOpen)} className="flex items-center hover:scale-75 cursor-pointer">
         <svg
           fill="none"
           viewBox="0 0 24 24"
@@ -31,6 +35,18 @@ const UserNav = () => {
           />
         </svg>
       </button>
+      {isOpen && (
+        <div className="absolute w-[220px] shadow-md top-[60px] right-0 bg-white rounded-xl flex flex-col">
+          <MenuLink
+            label="Log in"
+            onClick={() => console.log("login successfully")}
+          />
+          <MenuLink
+            label="Sign up"
+            onClick={() => console.log("Sign up successfully")}
+          />
+        </div>
+      )}
     </div>
   );
 };
