@@ -3,9 +3,11 @@
 import { useState } from "react";
 import MenuLink from "./MenuLink";
 import UseLoginModel from "@/app/hooks/useLoginModel";
+import UseSignupModel from "@/app/hooks/useSignupModel";
 
 const UserNav = () => {
   const loginModel = UseLoginModel();
+  const signupModel = UseSignupModel();
   const [isOpen, setisOpen] = useState(false);
   return (
     <div className="border rounded-full inline-block p-2 relative ">
@@ -46,13 +48,17 @@ const UserNav = () => {
             label="Log in"
             onClick={() => {
               console.log("login successfully");
-              setisOpen(false)
+              setisOpen(false);
               loginModel.open();
             }}
           />
           <MenuLink
             label="Sign up"
-            onClick={() => console.log("Sign up successfully")}
+            onClick={() => {
+              console.log("Sign up successfully");
+              setisOpen(false);
+              signupModel.open();
+            }}
           />
         </div>
       )}

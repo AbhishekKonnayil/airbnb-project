@@ -11,6 +11,7 @@ import React, { ReactNode } from "react";
 import Navbar from "./components/navbar/navbar";
 import Model from "./components/Models/Model";
 import LoginModel from "./components/Models/LoginModel";
+import SignupModel from "./components/Models/SignupModel";
 
 const RootLayout = ({ children }: { children: ReactNode }) => {
   const content = <p>hi hello</p>;
@@ -21,6 +22,7 @@ const RootLayout = ({ children }: { children: ReactNode }) => {
         <Navbar />
         <div className="py-32"> {children}</div>
         <LoginModel />
+        <SignupModel/>
       </body>
     </html>
   );

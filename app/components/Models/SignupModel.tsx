@@ -2,11 +2,11 @@
 
 import { useState } from "react";
 import Model from "./Model";
-import UseLoginModel from "@/app/hooks/useLoginModel";
+import UseSignupModel from "@/app/hooks/useSignupModel";
 import CustomButton from "../forms/CustomButton";
 
-const LoginModel = () => {
-  const loginModel = UseLoginModel();
+const SignupModel = () => {
+  const signupModel = UseSignupModel();
 
   const comtent = (
     <>
@@ -21,6 +21,11 @@ const LoginModel = () => {
           type="password"
           placeholder="Your Password"
         />
+         <input
+          className="p-3 border w-full border-gray-300 rounded-lg"
+          type="password"
+          placeholder="Repeat password"
+        />
         <div className="p-5 bg-airbnb text-white rounded-xl opacity-80">The error message</div>
         <CustomButton label="Submit" onClick={() => console.log("test")}className=""/>
       </form>
@@ -28,12 +33,13 @@ const LoginModel = () => {
   );
   return (
     <Model
-      isOpen={loginModel.isOpen}
-      close={loginModel.close}
-      label="Log in"
+      isOpen={signupModel.isOpen}
+      close={signupModel.close}
+      label="Sign Up"
       content={comtent}
     />
   );
 };
 
-export default LoginModel;
+
+export default SignupModel;
