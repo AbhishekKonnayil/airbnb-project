@@ -4,6 +4,7 @@ import { useState } from "react";
 import Model from "./Model";
 import UseSignupModel from "@/app/hooks/useSignupModel";
 import CustomButton from "../forms/CustomButton";
+import { useRouter } from "next/navigation";
 
 const SignupModel = () => {
   const signupModel = UseSignupModel();
