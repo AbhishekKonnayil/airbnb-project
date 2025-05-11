@@ -6,7 +6,7 @@ import UseSignupModel from "@/app/hooks/useSignupModel";
 import CustomButton from "../forms/CustomButton";
 import { useRouter } from "next/navigation";
 import apiSevice from "@/app/apiSevice";
-
+import { handleLogin } from "@/app/lib/Action";
 
 const SignupModel = () => {
   // variables
@@ -32,7 +32,7 @@ const SignupModel = () => {
     );
 
     if (response.access) {
-      // handleLogin
+      handleLogin(response.user.pk, response.access, response.refresh);
       signupModel.close();
       router.push("/");
     } else {

@@ -1,11 +1,16 @@
 "use client";
 
-import { useState } from "react";
+import React, { useState } from "react";
 import MenuLink from "./MenuLink";
 import UseLoginModel from "@/app/hooks/useLoginModel";
 import UseSignupModel from "@/app/hooks/useSignupModel";
+import LogoutButton from "../LogoutButton";
 
-const UserNav = () => {
+interface UsernavProps{
+  userId?:string | null
+}
+
+const UserNav:React.FC<UsernavProps> = ({userId}) => {
   const loginModel = UseLoginModel();
   const signupModel = UseSignupModel();
   const [isOpen, setisOpen] = useState(false);
@@ -60,6 +65,7 @@ const UserNav = () => {
               signupModel.open();
             }}
           />
+          <LogoutButton/>
         </div>
       )}
     </div>
