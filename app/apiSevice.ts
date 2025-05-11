@@ -10,7 +10,7 @@ const apiSevice = {
         method: "GET",
         headers: {
           Accept: "application/json",
-          "Content-Type": "application.json",
+          "Content-Type": "application/json",
         },
       })
         .then((response) => response.json())
@@ -23,16 +23,16 @@ const apiSevice = {
         });
     });
   },
-  post: async function (url: string,data:any): Promise<any> {
-    console.log("post", url,data);
+  post: async function (url: string, data: any): Promise<any> {
+    console.log("post", url, data);
 
     return new Promise((resolve, reject) => {
       fetch(`${process.env.NEXT_PUBLIC_API_HOST}${url}`, {
         method: "POST",
-        body:data,
+        body: data,
         headers: {
           Accept: "application/json",
-          "Content-Type": "application.json",
+          "Content-Type": "application/json",
         },
       })
         .then((response) => response.json())
