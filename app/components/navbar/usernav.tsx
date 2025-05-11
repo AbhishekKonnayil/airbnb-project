@@ -6,11 +6,11 @@ import UseLoginModel from "@/app/hooks/useLoginModel";
 import UseSignupModel from "@/app/hooks/useSignupModel";
 import LogoutButton from "../LogoutButton";
 
-interface UsernavProps{
-  userId?:string | null
+interface UsernavProps {
+  userId?: string | null;
 }
 
-const UserNav:React.FC<UsernavProps> = ({userId}) => {
+const UserNav: React.FC<UsernavProps> = ({ userId }) => {
   const loginModel = UseLoginModel();
   const signupModel = UseSignupModel();
   const [isOpen, setisOpen] = useState(false);
@@ -49,23 +49,28 @@ const UserNav:React.FC<UsernavProps> = ({userId}) => {
       </button>
       {isOpen && (
         <div className="absolute w-[220px] shadow-md top-[60px] right-0 bg-white rounded-xl flex flex-col">
-          <MenuLink
-            label="Log in"
-            onClick={() => {
-              console.log("login successfully");
-              setisOpen(false);
-              loginModel.open();
-            }}
-          />
-          <MenuLink
-            label="Sign up"
-            onClick={() => {
-              console.log("Sign up successfully");
-              setisOpen(false);
-              signupModel.open();
-            }}
-          />
-          <LogoutButton/>
+          {userId ? (
+            <LogoutButton />
+          ) : (
+            <div>
+              <MenuLink
+                label="Log in"
+                onClick={() => {
+                  console.log("login successfully");
+                  setisOpen(false);
+                  loginModel.open();
+                }}
+              />
+              <MenuLink
+                label="Sign up"
+                onClick={() => {
+                  console.log("Sign up successfully");
+                  setisOpen(false);
+                  signupModel.open();
+                }}
+              />
+            </div>
+          )}
         </div>
       )}
     </div>
