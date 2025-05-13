@@ -6,8 +6,9 @@ import CustomButton from "../forms/CustomButton";
 import { ChangeEvent, useState } from "react";
 import Categories from "../AddProperty/categories";
 import SelectCountry, { SelectCountryType } from "../forms/SelectCountry";
-import { url } from "inspector";
 import apiSevice from "@/app/apiSevice";
+import { useRouter } from "next/navigation";
+import { Console } from "console";
 
 const AddPropertyModel = () => {
   const [currentStep, setCurrentStep] = useState(1);
@@ -22,31 +23,8 @@ const AddPropertyModel = () => {
   const [dataImage, setDataImage] = useState<File | null>(null);
 
   const addPropertyModel = useAddPropertyModel();
+  const router = useRouter();
 
-  // submit
-
-  if (
-    dataCategory &&
-    dataDescription &&
-    dataTitle &&
-    dataImage &&
-    dataCountry &&
-    dataPrice
-  ) {
-    const formData = new FormData();
-    formData.append("category", dataCategory);
-    formData.append("title", dataTitle);
-    formData.append("description", dataDescription);
-    formData.append("image", dataImage);
-    formData.append("country", dataCountry.label);
-    formData.append("country_code", dataCountry.value);
-    formData.append("bathrooms", dataBathrooms);
-    formData.append("bedrooms", dataBedrooms);
-    formData.append("price_per_night", dataPrice);
-    formData.append("guests", dataGuests);
-
-    const response= await apiSevice.post('api/properties/create/',formData)
-  }
   // setData
 
   const setCategory = (category: string) => {
@@ -58,6 +36,44 @@ const AddPropertyModel = () => {
       const tmpImage = event.target.files[0];
 
       setDataImage(tmpImage);
+    }
+  };
+
+  // submit
+  const submitForm = async () => {
+    console.log("submitForm");
+    if (
+      dataCategory &&
+      dataDescription &&
+      dataTitle &&
+      dataImage &&
+      dataCountry &&
+      dataPrice
+    ) {
+      const formData = new FormData();
+      formData.append("category", dataCategory);
+      formData.append("title", dataTitle);
+      formData.append("description", dataDescription);
+      formData.append("image", dataImage);
+      formData.append("country", dataCountry.label);
+      formData.append("country_code", dataCountry.value);
+      formData.append("bathrooms", dataBathrooms);
+      formData.append("bedrooms", dataBedrooms);
+      formData.append("price_per_night", dataPrice);
+      formData.append("guests", dataGuests);
+      console.log("pageData", formData);
+      const response = await apiSevice.post(
+        "/api/properties/create/",
+        formData
+      );
+
+      if (response.success) {
+        console.log("SUCCESS :-D");
+        router.push("/");
+        addPropertyModel.close();
+      } else {
+        console.log("errors");
+      }
     }
   };
 
@@ -205,11 +221,7 @@ const AddPropertyModel = () => {
             onClick={() => setCurrentStep(4)}
             className="bg-gray-900 hover:bg-gray-950 mb-2"
           />
-          <CustomButton
-            label="Submit"
-            onClick={() => console.log("Submit")}
-            className=""
-          />
+          <CustomButton label="Submit" onClick={submitForm} className="" />
         </div>
       )}
     </div>

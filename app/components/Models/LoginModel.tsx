@@ -19,7 +19,7 @@ const LoginModel = () => {
       email: email,
       password: password,
     };
-    const response = await apiSevice.post(
+    const response = await apiSevice.postWithoutToken(
       "/api/auth/login/",
       JSON.stringify(formData)
     );

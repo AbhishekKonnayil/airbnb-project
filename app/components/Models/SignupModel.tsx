@@ -26,7 +26,7 @@ const SignupModel = () => {
       password2: password2,
     };
 
-    const response = await apiSevice.post(
+    const response = await apiSevice.postWithoutToken(
       "/api/auth/register/",
       JSON.stringify(formData)
     );
