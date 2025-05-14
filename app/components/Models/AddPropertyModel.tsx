@@ -156,7 +156,7 @@ const AddPropertyModel = () => {
               />
             </div>
             <div className="flex flex-col space-y-2">
-              <label>Guests</label>
+              <label>Maximum number of Guests</label>
               <input
                 type="number"
                 value={dataGuests}
