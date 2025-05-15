@@ -1,15 +1,18 @@
 import Image from "next/image";
-import React from "react";
-import BeachImage from "../../../public/cabin-image1.avif";
 import { PropertyType } from "./PropertiesList";
+import { useRouter } from "next/navigation";
 
 interface PropertyProps {
   property: PropertyType;
 }
 
-const PropertiesListItems:React.FC<PropertyProps> = ({property}) => {
+const PropertiesListItems: React.FC<PropertyProps> = ({ property }) => {
+  const router = useRouter();
   return (
-    <div className="cursor-pointer">
+    <div
+      onClick={() => router.push(`/properties/${property.id}`)}
+      className="cursor-pointer"
+    >
       <div className="relative overflow-hidden aspect-square rounded-xl">
         <Image
           fill

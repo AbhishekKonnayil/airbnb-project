@@ -32,7 +32,7 @@ const LoginModel = () => {
     }
   };
 
-  const comtent = (
+  const content = (
     <>
       <form action={submitLogin} className="space-y-4">
         <input
@@ -66,7 +66,7 @@ const LoginModel = () => {
       isOpen={loginModel.isOpen}
       close={loginModel.close}
       label="Log in"
-      content={comtent}
+      content={content}
     />
   );
 };

@@ -8,10 +8,11 @@ import Categories from "../AddProperty/categories";
 import SelectCountry, { SelectCountryType } from "../forms/SelectCountry";
 import apiSevice from "@/app/apiSevice";
 import { useRouter } from "next/navigation";
-import { Console } from "console";
+import { Console, error } from "console";
 
 const AddPropertyModel = () => {
   const [currentStep, setCurrentStep] = useState(1);
+  const [errors, setErrors] = useState<string[]>([]);
   const [dataCategory, setDataCategory] = useState("");
   const [dataTitle, setDataTitle] = useState("");
   const [dataDescription, setDataDescription] = useState("");
@@ -73,6 +74,11 @@ const AddPropertyModel = () => {
         addPropertyModel.close();
       } else {
         console.log("errors");
+
+        const tmpErrors = Object.values(response).map((error: any) => {
+          return error;
+        });
+        setErrors(tmpErrors);
       }
     }
   };
@@ -216,6 +222,17 @@ const AddPropertyModel = () => {
               </div>
             )}
           </div>
+          {errors.map((error, index) => {
+            return (
+              <div
+                key={index}
+                className="p-5 mb-4 ng-airbnb  text-white  opacity-80"
+              >
+                {error}
+              </div>
+            );
+          })}
+
           <CustomButton
             label="Previous"
             onClick={() => setCurrentStep(4)}
