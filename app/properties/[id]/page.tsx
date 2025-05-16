@@ -1,13 +1,15 @@
 import Image from "next/image";
 import ReservationSidebar from "@/app/components/Properties/ReservationSidebar";
 import apiSevice from "@/app/apiSevice";
+import { getUserId } from "@/app/lib/Action";
 
 const PropertyDetailPage = async ({ params }: { params: { id: string } }) => {
+  const userId = await getUserId();
   const property = await apiSevice.get(`/api/properties/${params.id}`);
-  console.log(property)
+  console.log(property);
   return (
     <div className="max-w-[1500px] mx-auto px-6 pb-6 ">
-      <div className="w-full h-[64vh] overflow-hidden rounded-xl relative">
+      <div className="w-full h-[64vh] mb-4 overflow-hidden rounded-xl relative">
         <Image
           fill
           src={property.image_url}
@@ -15,7 +17,7 @@ const PropertyDetailPage = async ({ params }: { params: { id: string } }) => {
           className="hover:scale-110 object-cover transition h-full w-full"
         />
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mt-4">
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-4 ">
         <div className="py-6 pr-6 col-span-3">
           <h1 className="text-4xl mb-4">{property.title}</h1>
           <span className="mb-6 block text-lg text-gray-600">
@@ -42,7 +44,7 @@ const PropertyDetailPage = async ({ params }: { params: { id: string } }) => {
           <p className="mt-6 text-lg">{property.description}</p>
         </div>
         <div>
-          <ReservationSidebar property={property} />
+          <ReservationSidebar property={property} userId={userId} />
         </div>
       </div>
     </div>
