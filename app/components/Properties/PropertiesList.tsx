@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import PropertiesListItems from "./PropertiesListItems";
 import { json } from "stream/consumers";
 import { error } from "console";
@@ -11,10 +11,17 @@ export type PropertyType = {
   image_url: string;
 };
 
-const PropertiesList = () => {
+interface PropertiesListProps {
+  landlord_id: string | null;
+}
+
+const PropertiesList: React.FC<PropertiesListProps> = ({ landlord_id }) => {
   const [properties, setProperties] = useState<PropertyType[]>([]);
   const getProperties = async () => {
-    const url = "/api/properties/";
+    let url = "/api/properties/";
+    if (landlord_id) {
+      url += `?landlord_id=${landlord_id}`;
+    }
     const tmpProperties = await apiSevice.get(url);
 
     setProperties(tmpProperties.data);

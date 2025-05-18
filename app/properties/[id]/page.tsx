@@ -2,6 +2,7 @@ import Image from "next/image";
 import ReservationSidebar from "@/app/components/Properties/ReservationSidebar";
 import apiSevice from "@/app/apiSevice";
 import { getUserId } from "@/app/lib/Action";
+import Link from "next/link";
 
 const PropertyDetailPage = async ({ params }: { params: { id: string } }) => {
   const userId = await getUserId();
@@ -21,25 +22,28 @@ const PropertyDetailPage = async ({ params }: { params: { id: string } }) => {
         <div className="py-6 pr-6 col-span-3">
           <h1 className="text-4xl mb-4">{property.title}</h1>
           <span className="mb-6 block text-lg text-gray-600">
-            {property.guests} Guests · {property.bedrooms} bedrooms ·{" "}
+            {property.guests} Guests · {property.bedrooms} bedrooms ·
             {property.bathrooms} bathroom
           </span>
           <hr />
-          <div className="flex py-6 items-center space-x-4">
-            {property.landlord.avatar_url && (
-              <Image
-                src={property.landlord.avatar_url}
-                width={40}
-                height={40}
-                alt="ProfilePicture"
-                className="rounded-full"
-              />
-            )}
+          <Link href={`/Landlords/${property.landlord.id}`}>
+            <div className="flex py-6 items-center space-x-4">
+              {property.landlord.avatar_url && (
+                <Image
+                  src={property.landlord.avatar_url}
+                  width={40}
+                  height={40}
+                  alt="landlord name"
+                  className="rounded-full"
+                />
+              )}
 
-            <p>
-              <strong>{property.landlord.name}</strong> is your host
-            </p>
-          </div>
+              <p>
+                <strong>{property.landlord.name}</strong> is your host
+              </p>
+            </div>
+          </Link>
+
           <hr />
           <p className="mt-6 text-lg">{property.description}</p>
         </div>

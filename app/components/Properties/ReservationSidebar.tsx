@@ -35,6 +35,7 @@ const ReservationSidebar: React.FC<ReservationSidebarProps> = ({
   const [dateRange, setDateRange] = useState<Range>(initialDateRange);
   const [minDate, setMinDate] = useState<Date>(new Date());
   const [guests, setGuests] = useState<string>("1");
+  const [bookedDates, setBookedDates] = useState<Date[]>([]);
 
   const guestRange = Array.from(
     { length: property.guests },
@@ -42,7 +43,7 @@ const ReservationSidebar: React.FC<ReservationSidebarProps> = ({
   );
 
   const performBooking = async () => {
-    console.log('perform booking',userId)
+    console.log("perform booking", userId);
     if (userId) {
       if (dateRange.startDate && dateRange.endDate) {
         const formData = new FormData();
@@ -85,8 +86,27 @@ const ReservationSidebar: React.FC<ReservationSidebarProps> = ({
       endDate: newEndDate,
     });
   };
+
+  const getReservations = async () => {
+    const reservations = await apiSevice.get(
+      `/api/properties/${property.id}/reservations/`
+    );
+
+    let dates: Date[] = [];
+
+    reservations.forEach((reservation: any) => {
+      const range = eachDayOfInterval({
+        start: new Date(reservation.start_date),
+        end: new Date(reservation.end_date),
+      });
+      dates = [...dates, ...range];
+    });
+    setBookedDates(dates);
+  };
+
   console.log("41");
   useEffect(() => {
+    getReservations();
     if (dateRange.startDate && dateRange.endDate) {
       const dayCount = differenceInDays(dateRange.endDate, dateRange.startDate);
       if (dayCount && property.price_per_night) {
@@ -113,6 +133,7 @@ const ReservationSidebar: React.FC<ReservationSidebarProps> = ({
     <aside className="p-6 mt-6 col-span-2 rounded-xl border border-gray-300 shadow-xl">
       <h1 className="mb-5 text-2xl">${property.price_per_night} per night</h1>
       <DatePicker
+        bookedDates={bookedDates}
         value={dateRange}
         onChange={(value) => _setDateRange(value.selection)}
       />
@@ -130,8 +151,10 @@ const ReservationSidebar: React.FC<ReservationSidebarProps> = ({
           ))}
         </select>
       </div>
-      <button onClick={performBooking}
-      className="w-full mb-6 py-6 text-center text-white bg-airbnb rounded-xl hover:bg-airbnb-dark">
+      <button
+        onClick={performBooking}
+        className="w-full mb-6 py-6 text-center text-white bg-airbnb rounded-xl hover:bg-airbnb-dark"
+      >
         Book
       </button>
       <div className="mb-4 flex justify-between align-middle">
