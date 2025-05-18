@@ -1,7 +1,7 @@
 import React from "react";
 import { DateRange, Range, RangeKeyDict } from "react-date-range";
-import 'react-date-range/dist/styles.css'
-import 'react-date-range/dist/theme/default.css'
+import "./styles.css";
+import "./default.css";
 
 interface DatePickerProps {
   value: Range;
@@ -15,17 +15,19 @@ const DatePicker: React.FC<DatePickerProps> = ({
   bookedDates,
 }) => {
   return (
-    <DateRange
-      className="w-full border border-gray-400 rounded-xl mb-6"
-      rangeColors={[`#262626`]}
-      ranges={[value]}
-      date={new Date()}
-      onChange={onChange}
-      direction="vertical"
-      showDateDisplay={false}
-      minDate={new Date()}
-      disabledDates={bookedDates}
-    />
+    <div >
+      <DateRange
+        className="w-full border border-gray-400 rounded-xl mb-6"
+        rangeColors={[`#262626`]}
+        ranges={[value]}
+        date={new Date()}
+        onChange={onChange}
+        direction="vertical"
+        showDateDisplay={false}
+        minDate={new Date()}
+        disabledDates={bookedDates}
+      />
+    </div>
   );
 };
 

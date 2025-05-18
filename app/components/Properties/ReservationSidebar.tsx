@@ -1,10 +1,11 @@
 "use client";
 
 import UseLoginModel from "@/app/hooks/useLoginModel";
-import { differenceInDays, eachDayOfInterval } from "date-fns";
+import { differenceInDays, eachDayOfInterval, format } from "date-fns";
 import { useEffect, useState } from "react";
 import { Range } from "react-date-range";
 import DatePicker from "../forms/Calender";
+import apiSevice from "@/app/apiSevice";
 
 const initialDateRange = {
   startDate: new Date(),
@@ -39,6 +40,36 @@ const ReservationSidebar: React.FC<ReservationSidebarProps> = ({
     { length: property.guests },
     (_, index) => index + 1
   );
+
+  const performBooking = async () => {
+    console.log('perform booking',userId)
+    if (userId) {
+      if (dateRange.startDate && dateRange.endDate) {
+        const formData = new FormData();
+        formData.append("guests", guests);
+        formData.append(
+          "start_date",
+          format(dateRange.startDate, "yyyy-MM-dd")
+        );
+        formData.append("end_date", format(dateRange.endDate, "yyyy-MM-dd"));
+        formData.append("number_of_nights", nights.toString());
+        formData.append("total_price", totalPrice.toString());
+
+        const response = await apiSevice.post(
+          `/api/properties/${property.id}/book/`,
+          formData
+        );
+
+        if (response.success) {
+          console.log("booking successful");
+        } else {
+          console.log("something went wrong");
+        }
+      }
+    } else {
+      loginModel.open();
+    }
+  };
 
   const _setDateRange = (Selection: any) => {
     const newStartDate = new Date(Selection.startDate);
@@ -99,7 +130,8 @@ const ReservationSidebar: React.FC<ReservationSidebarProps> = ({
           ))}
         </select>
       </div>
-      <button className="w-full mb-6 py-6 text-center text-white bg-airbnb rounded-xl hover:bg-airbnb-dark">
+      <button onClick={performBooking}
+      className="w-full mb-6 py-6 text-center text-white bg-airbnb rounded-xl hover:bg-airbnb-dark">
         Book
       </button>
       <div className="mb-4 flex justify-between align-middle">
