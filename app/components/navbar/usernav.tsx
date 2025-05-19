@@ -5,12 +5,14 @@ import MenuLink from "./MenuLink";
 import UseLoginModel from "@/app/hooks/useLoginModel";
 import UseSignupModel from "@/app/hooks/useSignupModel";
 import LogoutButton from "../LogoutButton";
+import { useRouter } from "next/navigation";
 
 interface UsernavProps {
   userId?: string | null;
 }
 
 const UserNav: React.FC<UsernavProps> = ({ userId }) => {
+  const router = useRouter();
   const loginModel = UseLoginModel();
   const signupModel = UseSignupModel();
   const [isOpen, setisOpen] = useState(false);
@@ -50,7 +52,16 @@ const UserNav: React.FC<UsernavProps> = ({ userId }) => {
       {isOpen && (
         <div className="absolute w-[220px] shadow-md top-[60px] right-0 bg-white rounded-xl flex flex-col">
           {userId ? (
-            <LogoutButton />
+            <div>
+              <MenuLink
+                label="My Properties"
+                onClick={() => {
+                  router.push('/myproperties');
+                  setisOpen(false);
+                }}
+              />
+              <LogoutButton />
+            </div>
           ) : (
             <div>
               <MenuLink
