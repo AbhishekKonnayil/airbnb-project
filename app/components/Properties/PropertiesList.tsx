@@ -23,6 +23,7 @@ const PropertiesList: React.FC<PropertiesListProps> = ({ landlord_id }) => {
       url += `?landlord_id=${landlord_id}`;
     }
     const tmpProperties = await apiSevice.get(url);
+    console.log("url", url);
 
     setProperties(tmpProperties.data);
   };

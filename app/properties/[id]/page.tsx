@@ -28,7 +28,7 @@ const PropertyDetailPage = async ({ params }: { params: { id: string } }) => {
           <hr />
           <Link href={`/Landlords/${property.landlord.id}`}>
             <div className="flex py-6 items-center space-x-4">
-              {property.landlord.avatar_url && (
+              {property.landlord.avatar_url ? (
                 <Image
                   src={property.landlord.avatar_url}
                   width={40}
@@ -36,6 +36,8 @@ const PropertyDetailPage = async ({ params }: { params: { id: string } }) => {
                   alt="landlord name"
                   className="rounded-full"
                 />
+              ) : (
+                <div className="h-[40px] w-[40px] bg-gray-400 rounded-4xl"></div>
               )}
 
               <p>
