@@ -9,6 +9,7 @@ export type PropertyType = {
   id: string;
   price_per_night: string;
   image_url: string;
+  is_favorite: boolean;
 };
 
 interface PropertiesListProps {
@@ -17,6 +18,23 @@ interface PropertiesListProps {
 
 const PropertiesList: React.FC<PropertiesListProps> = ({ landlord_id }) => {
   const [properties, setProperties] = useState<PropertyType[]>([]);
+
+  const markFavorite = (id: string, is_favorite: boolean) => {
+    const tmpProperties = properties.map((property: PropertyType) => {
+      if (property.id == id) {
+        property.is_favorite = is_favorite;
+
+        if (is_favorite) {
+          console.log("added to list of favorited properties");
+        } else {
+          console.log("removed from list");
+        }
+      }
+      return property;
+    });
+    setProperties(tmpProperties);
+  };
+
   const getProperties = async () => {
     let url = "/api/properties/";
     if (landlord_id) {
@@ -25,7 +43,16 @@ const PropertiesList: React.FC<PropertiesListProps> = ({ landlord_id }) => {
     const tmpProperties = await apiSevice.get(url);
     console.log("url", url);
 
-    setProperties(tmpProperties.data);
+    setProperties(
+      tmpProperties.data.map((property: PropertyType) => {
+        if (tmpProperties.favorites.includes(property.id)) {
+          property.is_favorite = true;
+        } else {
+          property.is_favorite = false;
+        }
+        return property;
+      })
+    );
   };
 
   useEffect(() => {
@@ -35,7 +62,15 @@ const PropertiesList: React.FC<PropertiesListProps> = ({ landlord_id }) => {
   return (
     <>
       {properties.map((property) => {
-        return <PropertiesListItems key={property.id} property={property} />;
+        return (
+          <PropertiesListItems
+            key={property.id}
+            property={property}
+            marKFavorite={(is_favorite: any) =>
+              markFavorite(property.id, is_favorite)
+            }
+          />
+        );
       })}
     </>
   );
