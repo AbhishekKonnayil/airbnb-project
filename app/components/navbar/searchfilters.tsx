@@ -1,8 +1,15 @@
+"use client";
 import React from "react";
+import SearchModel from "../Models/SearchModel";
+import UseSearchModel from "@/app/hooks/useSearchModel";
 
 const SearchFilters = () => {
+  const searchModel = UseSearchModel();
   return (
-    <div className="flex flex-row h-[48px] lg:h-[64px] items-center justify-between border rounded-full ">
+    <div
+      onClick={() => searchModel.open()}
+      className="flex flex-row h-[48px] lg:h-[64px] items-center justify-between border rounded-full "
+    >
       <div className="hidden lg:block">
         <div className="flex flex-row items-center justify-between">
           <div className="cursor-pointer w-[250px] h-[48px] lg:h-[64px] px-8 justify-center flex flex-col rounded-full hover:bg-gray-100 ">

@@ -13,6 +13,8 @@ import Model from "./components/Models/Model";
 import LoginModel from "./components/Models/LoginModel";
 import SignupModel from "./components/Models/SignupModel";
 import AddPropertyModel from "./components/Models/AddPropertyModel";
+import SearchModel from "./components/Models/SearchModel";
+
 
 const RootLayout = ({ children }: { children: ReactNode }) => {
   const content = <p>hi hello</p>;
@@ -24,6 +26,7 @@ const RootLayout = ({ children }: { children: ReactNode }) => {
         <div className="py-32"> {children}</div>
         <LoginModel />
         <SignupModel/>
+        <SearchModel/>
         <AddPropertyModel/>
       </body>
     </html>
