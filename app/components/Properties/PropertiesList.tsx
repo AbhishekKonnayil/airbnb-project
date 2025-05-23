@@ -6,6 +6,7 @@ import { error } from "console";
 import apiSevice from "@/app/apiSevice";
 import UseSearchModel from "@/app/hooks/useSearchModel";
 import { format } from "date-fns";
+import { useSearchParams } from "next/navigation";
 export type PropertyType = {
   title: string;
   id: string;
@@ -24,6 +25,7 @@ const PropertiesList: React.FC<PropertiesListProps> = ({
   favorites,
 }) => {
   const searchModel = UseSearchModel();
+  const params = useSearchParams();
   console.log(searchModel.query);
   const country = searchModel.query.country;
   const category = searchModel.query.category;
@@ -103,7 +105,7 @@ const PropertiesList: React.FC<PropertiesListProps> = ({
 
   useEffect(() => {
     getProperties();
-  }, [category,searchModel.query]);
+  }, [category, searchModel.query, params]);
 
   return (
     <>
