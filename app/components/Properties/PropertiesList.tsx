@@ -4,6 +4,8 @@ import PropertiesListItems from "./PropertiesListItems";
 import { json } from "stream/consumers";
 import { error } from "console";
 import apiSevice from "@/app/apiSevice";
+import UseSearchModel from "@/app/hooks/useSearchModel";
+import { format } from "date-fns";
 export type PropertyType = {
   title: string;
   id: string;
@@ -21,6 +23,15 @@ const PropertiesList: React.FC<PropertiesListProps> = ({
   landlord_id,
   favorites,
 }) => {
+  const searchModel = UseSearchModel();
+  console.log(searchModel.query);
+  const country = searchModel.query.country;
+  const category = searchModel.query.category;
+  const numBathrooms = searchModel.query.bathrooms;
+  const numBedrooms = searchModel.query.bedrooms;
+  const numGuests = searchModel.query.guests;
+  const checkInDate = searchModel.query.checkIn;
+  const checkOutDate = searchModel.query.checkOut;
   const [properties, setProperties] = useState<PropertyType[]>([]);
 
   const markFavorite = (id: string, is_favorite: boolean) => {
@@ -45,7 +56,36 @@ const PropertiesList: React.FC<PropertiesListProps> = ({
       url += `?landlord_id=${landlord_id}`;
     } else if (favorites) {
       url += `?is_favorites=true`;
+    } else {
+      let urlQuery = "";
+      if (country) {
+        urlQuery += "&country=" + country;
+      }
+      if (category) {
+        urlQuery += "&category=" + category;
+      }
+      if (numGuests) {
+        urlQuery += "&numGuests=" + numGuests;
+      }
+      if (numBedrooms) {
+        urlQuery += "&numBedrooms=" + numBedrooms;
+      }
+      if (numBathrooms) {
+        urlQuery += "&numBathrooms=" + numBathrooms;
+      }
+      if (checkInDate) {
+        urlQuery += "&checkin=" + format(checkInDate, "yyyy-MM-dd");
+      }
+      if (checkOutDate) {
+        urlQuery += "&checkout=" + format(checkOutDate, "yyyy-MM-dd");
+      }
+      if (urlQuery.length) {
+        urlQuery = "?" + urlQuery.substring(1);
+
+        url += urlQuery;
+      }
     }
+
     const tmpProperties = await apiSevice.get(url);
     console.log("url", url);
 
@@ -63,7 +103,7 @@ const PropertiesList: React.FC<PropertiesListProps> = ({
 
   useEffect(() => {
     getProperties();
-  }, []);
+  }, [category,searchModel.query]);
 
   return (
     <>

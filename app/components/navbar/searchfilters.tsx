@@ -7,7 +7,7 @@ const SearchFilters = () => {
   const searchModel = UseSearchModel();
   return (
     <div
-      onClick={() => searchModel.open()}
+      onClick={() => searchModel.open("location")}
       className="flex flex-row h-[48px] lg:h-[64px] items-center justify-between border rounded-full "
     >
       <div className="hidden lg:block">
